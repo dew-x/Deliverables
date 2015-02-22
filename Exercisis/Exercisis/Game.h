@@ -10,6 +10,10 @@
 #include "FPSLimiter.h"
 #include "OpenGLBuffers.h"
 #include "Vertex.h"
+#include <vector>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 #define MAX_VERTICES 6
 
@@ -33,7 +37,7 @@ class Game {
 		GLSLProgram _colorProgram;		//Manage the shaders
 		FPSLimiter _fpsLimiter;			//Manage the synchronization between frame rate and refresh rate
 		OpenGLBuffers _openGLBuffers;	//Manage the openGL buffers
-		Vertex data[MAX_VERTICES];		//Data structure that contains the information to display
+		vector<Vertex> data;		//Data structure that contains the information to display
 		float _time;					//Attribute for representing the time value that will be send to the shader
 
 			//Internal methods

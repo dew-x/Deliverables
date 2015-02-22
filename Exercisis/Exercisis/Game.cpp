@@ -1,5 +1,49 @@
 #include "Game.h"
 
+void loadObjModel(std::string filename, vector<Vertex> &data) {
+	int a, b, c;
+	std::ifstream inputFile(filename, std::ios::in);
+	if (!inputFile)
+	{
+		std::cerr << "Cannot open " << filename << std::endl;
+		exit(1);
+	}
+	std::string line;
+	while (std::getline(inputFile, line))
+	{
+		if (line.substr(0, 2) == "v "){
+			std::istringstream v(line.substr(2));
+			
+			double x, y, z;
+			v >> x; v >> y; v >> z;
+			Vertex vert;
+			vert.setPosition(x / 1000, y / 1000, z / 1000);
+			vert.setColor(255, 0, 255, 255);
+			data.push_back(vert);
+		}
+		else if (line.substr(0, 2) == "f "){
+			std::string lineVals = line.substr(2);
+			std::string val0 = lineVals.substr(0, lineVals.find_first_of(' '));
+			// Get first group of values
+			std::string g1 = val0.substr(0, val0.find(' '));
+			std::istringstream v1(g1);
+			v1 >> a;
+			// Get second group of values
+			std::string g2 = line.substr(line.find(' ') + 2);
+			g2 = g2.substr(g2.find(' ') + 1);
+			std::istringstream v2(g2);
+			v2 >> b;
+			// Get third group of values
+			g2 = g2.substr(0, g2.find(' '));
+			std::string g3 = line.substr(line.find_last_of(' ') + 1);
+			std::istringstream v3(g3);
+			v3 >> c;
+			//faceIndex.push_back(glm::i32vec3(a, b, c));
+		}
+	}
+
+}
+
 
 /**
 * Constructor
@@ -73,7 +117,12 @@ void Game::createPrimitivesToRender() {
 
 	float width = 1;
 	float height = 1;
-
+	data = vector<Vertex>(0);
+	loadObjModel("resources/teapot.obj", data);
+	std::cout << data.size() << std::endl;
+	std::cout << data.size() << std::endl;
+	std::cout << data.size() << std::endl;
+	/*
 	//First triangle
 	data[0].setPosition(x + width, y + height, 0.0f);
 	data[0].setColor(0, 255, 0, 255);
@@ -101,7 +150,7 @@ void Game::createPrimitivesToRender() {
 	//Set the color of the 1st coordinate to blue
 	data[1].setColor(0, 0, 255, 255);
 	//Set the color of the 4th coordinate to green
-	data[4].setColor(0, 255, 0, 255);
+	data[4].setColor(0, 255, 0, 255);*/
 }
 
 /*
@@ -160,7 +209,7 @@ void Game::drawGame() {
 	glUniform1f(timeLocation,_time);
 
 		//Send data to GPU
-	_openGLBuffers.sendDataToGPU(data,MAX_VERTICES);
+	_openGLBuffers.sendDataToGPU(&data[0],data.size());
 
 		//Unbind the program
 	_colorProgram.unuse();
