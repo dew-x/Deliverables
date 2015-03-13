@@ -65,7 +65,7 @@ int Window::create(std::string windowName, int screenWidth, int screenHeight, un
 	printf("****** OpenGL Version %s ********", glGetString(GL_VERSION));
 
 	//Set the color that will be set every time the color buffer is initialized
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	//Set VSYNC. 0 means disable, 1 means enable
 	//If it's enable, it automatically syncs the fps with the monitor, so, we don't need to use SDL_Delay

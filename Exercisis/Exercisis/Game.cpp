@@ -1,49 +1,5 @@
 #include "Game.h"
 
-void loadObjModel(std::string filename, vector<Vertex> &data) {
-	int a, b, c;
-	std::ifstream inputFile(filename, std::ios::in);
-	if (!inputFile)
-	{
-		std::cerr << "Cannot open " << filename << std::endl;
-		exit(1);
-	}
-	std::string line;
-	while (std::getline(inputFile, line))
-	{
-		if (line.substr(0, 2) == "v "){
-			std::istringstream v(line.substr(2));
-			
-			double x, y, z;
-			v >> x; v >> y; v >> z;
-			Vertex vert;
-			vert.setPosition(x / 1000, y / 1000, z / 1000);
-			vert.setColor(255, 0, 255, 255);
-			data.push_back(vert);
-		}
-		else if (line.substr(0, 2) == "f "){
-			std::string lineVals = line.substr(2);
-			std::string val0 = lineVals.substr(0, lineVals.find_first_of(' '));
-			// Get first group of values
-			std::string g1 = val0.substr(0, val0.find(' '));
-			std::istringstream v1(g1);
-			v1 >> a;
-			// Get second group of values
-			std::string g2 = line.substr(line.find(' ') + 2);
-			g2 = g2.substr(g2.find(' ') + 1);
-			std::istringstream v2(g2);
-			v2 >> b;
-			// Get third group of values
-			g2 = g2.substr(0, g2.find(' '));
-			std::string g3 = line.substr(line.find_last_of(' ') + 1);
-			std::istringstream v3(g3);
-			v3 >> c;
-			//faceIndex.push_back(glm::i32vec3(a, b, c));
-		}
-	}
-
-}
-
 
 /**
 * Constructor
@@ -57,8 +13,9 @@ Game::Game(std::string windowTitle, int screenWidth, int screenHeight, bool enab
 	_screenWidth(screenWidth), 
 	_screenHeight(screenHeight),
 	_gameState(GameState::INIT), 
-	_fpsLimiter(enableLimiterFPS, maxFPS, printFPS),
-	_time(0){
+	_fpsLimiter(enableLimiterFPS, maxFPS, printFPS) {
+
+
 }
 
 /**
@@ -97,11 +54,11 @@ void Game::initSystems() {
 */
 void Game::loadShaders() {
 		//Compile the shaders
-	_colorProgram.addShader(GL_VERTEX_SHADER, "./resources/shaders/vertex-shader.vert");
-	_colorProgram.addShader(GL_FRAGMENT_SHADER, "./resources/shaders/fragment-shader.frag");
+	_colorProgram.addShader(GL_VERTEX_SHADER, "./resources/shaders/vertex-shader.txt");
+	_colorProgram.addShader(GL_FRAGMENT_SHADER, "./resources/shaders/fragment-shader.txt");
 	_colorProgram.compileShaders();
 		//Attributes must be added before linking the code
-	_colorProgram.addAttribute("vertexPosition");
+	_colorProgram.addAttribute("vertexPositionGame");
 	_colorProgram.addAttribute("vertexColor");
 		//Link the compiled shaders
 	_colorProgram.linkShaders();
@@ -111,46 +68,18 @@ void Game::loadShaders() {
 * Initialize the position and the color of the different vertices that have to be rendered
 */
 void Game::createPrimitivesToRender() {
-
-	float x = -0.5;
-	float y = -0.5;
-
-	float width = 1;
-	float height = 1;
-	data = vector<Vertex>(0);
-	loadObjModel("resources/teapot.obj", data);
-	std::cout << data.size() << std::endl;
-	std::cout << data.size() << std::endl;
-	std::cout << data.size() << std::endl;
-	/*
-	//First triangle
-	data[0].setPosition(x + width, y + height, 0.0f);
+	triangle3DPosition=glm::vec3(0.4,0.3,0);	//Center the triangle in the middle of the screen
+	triangleRadius=0.2;
+	
+	data[0].setPosition(triangle3DPosition.x + 0, triangle3DPosition.y+0.2, 0.0f);
 	data[0].setColor(0, 255, 0, 255);
 
-	data[1].setPosition(x, y + height, 0.0f);
+	data[1].setPosition(triangle3DPosition.x - 0.1*sqrt(3.0f), triangle3DPosition.y - 0.1f, 0.0f);
 	data[1].setColor(255, 0, 0, 255);
 
-	data[2].setPosition(x, y, 0.0f);
+	data[2].setPosition(triangle3DPosition.x + 0.1*sqrt(3.0f), triangle3DPosition.y - 0.1f, 0.0f);
 	data[2].setColor(0, 0, 255, 255);
 
-	//Second triangle
-	data[3].setPosition(x, y, 0.0f);
-	data[3].setColor(255, 255, 255, 255);
-
-	data[4].setPosition(x + width, y, 0.0f);
-	data[4].setColor(255, 255, 255, 255);
-
-	data[5].setPosition(x + width, y + height, 0.0f);
-	data[5].setColor(255, 255, 255, 255);
-
-	//Set the color to magenta
-	for (int i = 0; i < 6; i++) {
-		data[i].setColor(255, 0, 255, 255);
-	}
-	//Set the color of the 1st coordinate to blue
-	data[1].setColor(0, 0, 255, 255);
-	//Set the color of the 4th coordinate to green
-	data[4].setColor(0, 255, 0, 255);*/
 }
 
 /*
@@ -163,6 +92,8 @@ void Game::gameLoop() {
 		_fpsLimiter.startSynchronization();
 			//Process the input information (keyboard and mouse)
 		processInput();
+			//Execute pending actions
+		updateGameObjects();
 			//Draw the objects on the screen
 		drawGame();	
 			//Force synchronization
@@ -183,6 +114,15 @@ void Game::processInput() {
 		case SDL_QUIT:
 			_gameState = GameState::EXIT;
 			break;
+		case SDL_MOUSEMOTION:
+			cout << "(" << evnt.motion.x << ", " << evnt.motion.y << ")" << endl;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			cout << "Button up" << endl;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			cout << "Button down" << endl;
+			break;		
 		default:
 			break;
 		}
@@ -202,14 +142,17 @@ void Game::drawGame() {
 		//Bind the GLSL program. Only one code GLSL can be used at the same time
 	_colorProgram.use();
 
-		//Set the new value for the uniform variable
-		//Important: If time is not used in the shader, we will get an error because GLSL will delete it for us. Then, we need to comment the following three lines
-	_time = _time+0.05f;
-	GLuint timeLocation = _colorProgram.getUniformLocation("time");
-	glUniform1f(timeLocation,_time);
-
+		//Pass the matrix information to the shader
+			//Get the uniform variable location
+			//Pass the matrix
+				//1st parameter: the location
+				//2nd parameter: the number of matrices
+				//3rd parameter: if we want to tranpose the matrix
+				//4th parameter: the matrix data
+	GLuint modelMatrixUniform = _colorProgram.getUniformLocation("modelMatrix");
+	glUniformMatrix4fv(modelMatrixUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 		//Send data to GPU
-	_openGLBuffers.sendDataToGPU(&data[0],data.size());
+	_openGLBuffers.sendDataToGPU(data,MAX_VERTICES);
 
 		//Unbind the program
 	_colorProgram.unuse();
@@ -218,3 +161,30 @@ void Game::drawGame() {
 	_window.swapBuffer();
 }
 
+/*
+* Execute the actions that must update the game objects
+*/
+void Game::updateGameObjects() {
+
+	/*
+	glm::mat4 trans;
+	trans = glm::rotate(trans, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::vec4 result = trans * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	printf("%f, %f, %f\n", result.x, result.y, result.z);
+	*/
+	
+//	glm::mat4 identityMatrix;
+	//The animation consists in randomly rotating the triangle. The operations must be done in the inverse order that we want to do
+		//Scale the triangle
+	//modelMatrix = glm::scale(identityMatrix, glm::vec3(1.25, 1, 1));
+
+		//3rd step: Restore the triangle to its original position
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(triangle3DPosition.x, triangle3DPosition.y, 0.0f));
+	
+		//2nd: Rotate 90º along the z-axis
+	modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		
+		//1st: Move the triangle to the center
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(-triangle3DPosition.x, -triangle3DPosition.y, 0.0f));	
+
+}

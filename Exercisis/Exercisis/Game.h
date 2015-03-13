@@ -3,19 +3,18 @@
 
 //Third-party libraries
 #include <GL/glew.h>			//The OpenGL Extension Wrangler
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>			//OpenGL Mathematics 
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include "Window.h"
 #include "GLSLProgram.h"
 #include "FPSLimiter.h"
 #include "OpenGLBuffers.h"
 #include "Vertex.h"
-#include <vector>
-#include <fstream>
-#include <string>
-#include <sstream>
 
-#define MAX_VERTICES 6
+#define MAX_VERTICES 3
 
 //Game has three possible states: INIT (Preparing environment), PLAY (Playing) or EXIT (Exit from the game)
 enum class GameState{INIT, PLAY, EXIT};
@@ -37,8 +36,10 @@ class Game {
 		GLSLProgram _colorProgram;		//Manage the shaders
 		FPSLimiter _fpsLimiter;			//Manage the synchronization between frame rate and refresh rate
 		OpenGLBuffers _openGLBuffers;	//Manage the openGL buffers
-		vector<Vertex> data;		//Data structure that contains the information to display
-		float _time;					//Attribute for representing the time value that will be send to the shader
+		Vertex data[MAX_VERTICES];		//Data structure that contains the information to display
+		glm::mat4 modelMatrix;			//Model matrix transformation
+		glm::vec3 triangle3DPosition;	//Description of the triangle
+		long triangleRadius;
 
 			//Internal methods
 		void initSystems();
@@ -46,6 +47,7 @@ class Game {
 		void createPrimitivesToRender();
 		void gameLoop();
 		void processInput();
+		void updateGameObjects();
 		void drawGame();	
 		
 };
