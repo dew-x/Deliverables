@@ -67,7 +67,7 @@ void Game::loadShaders() {
 * Initialize the position and the color of the different vertices that have to be rendered
 */
 void Game::createPrimitivesToRender() {
-	geo.loadScene("resources/figures2.txt");
+	geo.loadScene("resources/figures.txt");
 	data = geo.getData();
 	cout << "LOG DATA" << endl;
 	for (int i = 0; i < data.size(); ++i) {
