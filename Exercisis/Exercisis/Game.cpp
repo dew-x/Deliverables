@@ -67,7 +67,7 @@ void Game::loadShaders() {
 * Initialize the position and the color of the different vertices that have to be rendered
 */
 void Game::createPrimitivesToRender() {
-	geo.loadScene("figures.txt");
+	geo.loadScene("resources/figures2.txt");
 	data = geo.getData();
 	/*triangle3DPosition=glm::vec3(0.4,0.3,0);	//Center the triangle in the middle of the screen
 	triangleRadius=0.2;
