@@ -85,7 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ErrorManagement.cpp" />
-    <ClCompile Include="Ex5-Main.cpp" />
+    <ClCompile Include="Ex6-Main.cpp" />
     <ClCompile Include="FPSLimiter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GLSLProgram.cpp" />
