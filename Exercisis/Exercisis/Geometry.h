@@ -5,6 +5,7 @@
 #include <glm\glm.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #include "Vertex.h"
+#include <iostream>
 using namespace std;
 class Geometry
 {

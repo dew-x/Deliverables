@@ -69,6 +69,12 @@ void Game::loadShaders() {
 void Game::createPrimitivesToRender() {
 	geo.loadScene("resources/figures2.txt");
 	data = geo.getData();
+	cout << "LOG DATA" << endl;
+	for (int i = 0; i < data.size(); ++i) {
+		cout << i << endl;
+		cout << data[i].position.x << " " << data[i].position.y << " " << data[i].position.z << endl;
+		cout << data[i].color.r << " " << data[i].color.g << " " << data[i].color.b << " " << data[i].color.a << endl;
+	}
 	/*triangle3DPosition=glm::vec3(0.4,0.3,0);	//Center the triangle in the middle of the screen
 	triangleRadius=0.2;
 	

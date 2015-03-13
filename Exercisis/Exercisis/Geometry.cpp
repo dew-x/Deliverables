@@ -13,6 +13,7 @@ Geometry::~Geometry()
 }
 
 void Geometry::loadScene(const char *fname) {
+	data = vector<Vertex>(0);
 	ifstream myfile;
 	myfile.open(fname);
 	int n, v, f, v0, v1, v2, rgba0, rgba1, rgba2, rgba3;
@@ -40,9 +41,13 @@ void Geometry::loadScene(const char *fname) {
 		myfile >> tx >> ty >> tz;
 		glm::vec3 translation = { tx, ty, tz };
 		for (int j = 0; j < v; ++j) {
+			//cout <<"a"<< vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
 			vertices[j] *= scalation;
-			vertices[j] = glm::rotate(vertices[j], glm::radians(ra), rotation);
+			//cout << vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
+			glm::rotate(vertices[j], glm::radians(ra), rotation);
+			//cout << vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
 			vertices[j] += translation;
+			//cout << vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
 		}
 		myfile >> rgba0 >> rgba1 >> rgba2 >> rgba3;
 		for (int j = 0; j < f; ++j) {
@@ -65,5 +70,11 @@ void Geometry::loadScene(const char *fname) {
 }
 
 vector<Vertex> Geometry::getData() {
+	cout << "LOG DATA1" << endl;
+	for (int i = 0; i < data.size(); ++i) {
+		cout << i << endl;
+		cout << data[i].position.x << " " << data[i].position.y << " " << data[i].position.z << endl;
+		cout << data[i].color.r << " " << data[i].color.g << " " << data[i].color.b << " " << data[i].color.a << endl;
+	}
 	return data;
 }

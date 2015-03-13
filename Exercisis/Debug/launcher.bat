@@ -1,0 +1,1 @@
+Exercisis.exe >log.txt

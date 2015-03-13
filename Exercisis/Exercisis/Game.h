@@ -14,6 +14,7 @@
 #include "OpenGLBuffers.h"
 #include "Vertex.h"
 #include "Geometry.h"
+using namespace std;
 
 #define MAX_VERTICES 3
 
