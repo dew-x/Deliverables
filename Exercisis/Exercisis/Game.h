@@ -37,7 +37,7 @@ class Game {
 		GLSLProgram _colorProgram;		//Manage the shaders
 		FPSLimiter _fpsLimiter;			//Manage the synchronization between frame rate and refresh rate
 		OpenGLBuffers _openGLBuffers;	//Manage the openGL buffers
-		Vertex data[MAX_VERTICES];		//Data structure that contains the information to display
+		vector<Vertex> data;		//Data structure that contains the information to display
 		glm::mat4 modelMatrix;			//Model matrix transformation
 		glm::vec3 triangle3DPosition;	//Description of the triangle
 		long triangleRadius;

@@ -67,7 +67,9 @@ void Game::loadShaders() {
 * Initialize the position and the color of the different vertices that have to be rendered
 */
 void Game::createPrimitivesToRender() {
-	triangle3DPosition=glm::vec3(0.4,0.3,0);	//Center the triangle in the middle of the screen
+	geo.loadScene("figures.txt");
+	data = geo.getData();
+	/*triangle3DPosition=glm::vec3(0.4,0.3,0);	//Center the triangle in the middle of the screen
 	triangleRadius=0.2;
 	
 	data[0].setPosition(triangle3DPosition.x + 0, triangle3DPosition.y+0.2, 0.0f);
@@ -77,7 +79,7 @@ void Game::createPrimitivesToRender() {
 	data[1].setColor(255, 0, 0, 255);
 
 	data[2].setPosition(triangle3DPosition.x + 0.1*sqrt(3.0f), triangle3DPosition.y - 0.1f, 0.0f);
-	data[2].setColor(0, 0, 255, 255);
+	data[2].setColor(0, 0, 255, 255);*/
 
 }
 
@@ -151,7 +153,7 @@ void Game::drawGame() {
 	GLuint modelMatrixUniform = _colorProgram.getUniformLocation("modelMatrix");
 	glUniformMatrix4fv(modelMatrixUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 		//Send data to GPU
-	_openGLBuffers.sendDataToGPU(data,MAX_VERTICES);
+	_openGLBuffers.sendDataToGPU(&data[0], data.size());
 
 		//Unbind the program
 	_colorProgram.unuse();
