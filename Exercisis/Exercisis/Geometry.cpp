@@ -9,6 +9,7 @@ Geometry::Geometry()
 
 Geometry::~Geometry()
 {
+	data.clear();
 }
 
 void Geometry::loadScene(const char *fname) {
@@ -61,4 +62,8 @@ void Geometry::loadScene(const char *fname) {
 			data.push_back(v2);
 		}
 	}
+}
+
+vector<Vertex> Geometry::getData() {
+	return data;
 }

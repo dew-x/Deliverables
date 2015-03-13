@@ -14,5 +14,6 @@ public:
 	Geometry();
 	~Geometry();
 	void loadScene(const char *fname);
+	vector<Vertex> getData();
 };
 
