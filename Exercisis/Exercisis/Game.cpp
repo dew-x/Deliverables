@@ -94,7 +94,7 @@ void Game::gameLoop() {
 			//Process the input information (keyboard and mouse)
 		processInput();
 			//Execute pending actions
-		updateGameObjects();
+		//updateGameObjects();
 			//Draw the objects on the screen
 		drawGame();	
 			//Force synchronization
