@@ -13,6 +13,7 @@
 #include "FPSLimiter.h"
 #include "OpenGLBuffers.h"
 #include "Vertex.h"
+#include "Geometry.h"
 
 #define MAX_VERTICES 3
 
@@ -40,6 +41,7 @@ class Game {
 		glm::mat4 modelMatrix;			//Model matrix transformation
 		glm::vec3 triangle3DPosition;	//Description of the triangle
 		long triangleRadius;
+		Geometry geo;
 
 			//Internal methods
 		void initSystems();

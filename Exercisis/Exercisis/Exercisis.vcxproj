@@ -88,6 +88,7 @@
     <ClCompile Include="Ex6-Main.cpp" />
     <ClCompile Include="FPSLimiter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="GLSLProgram.cpp" />
     <ClCompile Include="OpenGLBuffers.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="ErrorManagement.h" />
     <ClInclude Include="FPSLimiter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="GLSLProgram.h" />
     <ClInclude Include="OpenGLBuffers.h" />
     <ClInclude Include="Vertex.h" />

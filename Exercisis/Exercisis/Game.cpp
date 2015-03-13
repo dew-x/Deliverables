@@ -14,8 +14,7 @@ Game::Game(std::string windowTitle, int screenWidth, int screenHeight, bool enab
 	_screenHeight(screenHeight),
 	_gameState(GameState::INIT), 
 	_fpsLimiter(enableLimiterFPS, maxFPS, printFPS) {
-
-
+	
 }
 
 /**
