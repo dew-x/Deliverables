@@ -38,13 +38,14 @@ void Geometry::loadScene(const char *fname) {
 		glm::vec3 scalation = { sx, sy, sz };
 		myfile >> ra >> rx >> ry >> rz;
 		glm::vec3 rotation = { rx, ry, rz };
+		//rotation = { 0, 0, 1 };
 		myfile >> tx >> ty >> tz;
 		glm::vec3 translation = { tx, ty, tz };
 		for (int j = 0; j < v; ++j) {
 			//cout <<"a"<< vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
 			vertices[j] *= scalation;
 			//cout << vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
-			glm::rotate(vertices[j], glm::radians(ra), rotation);
+			vertices[j] = glm::rotate(vertices[j], glm::radians(ra), rotation);
 			//cout << vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
 			vertices[j] += translation;
 			//cout << vertices[j].x << " " << vertices[j].y << " " << vertices[j].z << endl;
